@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {BrowserRouter as Router, Route, Switch, Link} from "react-router-dom"
 import Home from "./components/Home"
 import CategorySelection from './components/CategorySelection'
@@ -7,6 +7,8 @@ import NotFound from "./components/NotFound"
 
 
 const App = () => {
+  const defaultCategories = ["Food", "Coding", "other"]
+  const [categories, setCategories] = useState(defaultCategories)
   return (
     <div >
         <Router>
@@ -18,8 +20,8 @@ const App = () => {
           
           <Switch>
             <Route exact path="/" component={Home}/>
-            <Route path="/category" component={CategorySelection}/>
-            <Route path="/entry/new" component={NewEntry}/>
+            <Route path="/category" render={(props) => <CategorySelection {...props} categories={categories}/>}/>
+            <Route path="/entry/new" render={(props) => <NewEntry {...props} categories={categories}/>}/>
             <Route component={NotFound} />
           </Switch>
         </Router>
